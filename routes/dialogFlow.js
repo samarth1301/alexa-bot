@@ -46,12 +46,12 @@ router.post('/bot', async (req, res) => {
         const { type } = request;
         if (type === 'LaunchRequest') {
             return res.json(
-                            responseJSON('Welcome to Test, How can I help you?')
+                            responseJSON('Welcome to Fargo, How can I help you?')
             )
         }
         if (type === 'SessionEndedRequest' || request?.intent?.name == 'AMAZON.StopIntent') {
             return res.json(
-                responseJSON('Thank you for using Test, Have a great day.')
+                responseJSON('Thank you for using Fargo, Have a great day.')
             )
         }
 
