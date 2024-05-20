@@ -17,16 +17,16 @@ const responseJSON = (text)=>{
                 "type": "PlainText",
                 "text": text,
             },
+            "reprompt": {
+                "outputSpeech": {
+                  "type": "PlainText",
+                  "text": "Sorry I did not get you, please go again.",
+                  "playBehavior": "REPLACE_ENQUEUED"             
+                }
+              },
+           
+              "shouldEndSession": false
         },
-        "reprompt": {
-            "outputSpeech": {
-              "type": "PlainText",
-              "text": "Sorry I did not get you, please go again.",
-              "playBehavior": "REPLACE_ENQUEUED"             
-            }
-          },
-       
-          "shouldEndSession": false
     }
 }
 
