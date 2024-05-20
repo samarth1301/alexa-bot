@@ -7,6 +7,29 @@ router.get('/test', async (req, res) => {
 })
 
 
+
+const responseJSON = (text)=>{
+    return {
+        "version": "1.0",
+
+        "response": {
+            "outputSpeech": {
+                "type": "PlainText",
+                "text": text,
+            },
+        },
+        "reprompt": {
+            "outputSpeech": {
+              "type": "PlainText",
+              "text": "Sorry I did not get you, please go again.",
+              "playBehavior": "REPLACE_ENQUEUED"             
+            }
+          },
+       
+          "shouldEndSession": false
+    }
+}
+
 /*
 METHOD: POST
 PATH: /df/bot
@@ -23,30 +46,12 @@ router.post('/bot', async (req, res) => {
         const { type } = request;
         if (type === 'LaunchRequest') {
             return res.json(
-                {
-                    "version": "1.0",
-
-                    "response": {
-                        "outputSpeech": {
-                            "type": "PlainText",
-                            "text": 'Welcome to Test, How can I help you?',
-                        },
-                    }
-                }
+                            responseJSON('Welcome to Test, How can I help you?')
             )
         }
         if (type === 'SessionEndedRequest' || request?.intent?.name == 'AMAZON.StopIntent') {
             return res.json(
-                {
-                    "version": "1.0",
-
-                    "response": {
-                        "outputSpeech": {
-                            "type": "PlainText",
-                            "text": 'Thank you for using Test, Have a great day.',
-                        },
-                    }
-                }
+                responseJSON('Thank you for using Test, Have a great day.')
             )
         }
 
@@ -56,29 +61,12 @@ router.post('/bot', async (req, res) => {
         const { queryResult } = result[0];
         const { fulfillmentText } = queryResult;
         return res.json(
-            {
-                "version": "1.0",
-
-                "response": {
-                    "outputSpeech": {
-                        "type": "PlainText",
-                        "text": fulfillmentText,
-                    },
-                }
-            }
+            responseJSON(fulfillmentText)
         );
     } catch (error) {
         console.log(error);
         return res.json(
-            {
-                "version": "1.0",
-                "response": {
-                    "outputSpeech": {
-                        "type": "PlainText",
-                        "text": "Internal Server Error, Please try again later.",
-                    },
-                }
-            }
+           responseJSON("Internal Server Error, Please try again later.")
         );
     }
 })
